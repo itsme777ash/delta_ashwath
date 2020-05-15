@@ -1,0 +1,136 @@
+package com.example.delta_1;
+import android.annotation.SuppressLint;
+import android.view.View;
+import java.lang.Math;
+import java.util.*;
+import java.util.Random;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+
+public class MainActivity extends AppCompatActivity {
+    int value=0;
+    int ran=0;
+    Button but1;
+    Button but2;
+    Button but3;
+    TextView sol;
+    String cor="Your answer is right!!!!";
+    String wron="Your answer is wrong :(:("+"\n"+"The correct answer is ";
+    int arr[]=new int[3];
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+         but1=(Button)findViewById(R.id.Button_1);
+         but2=(Button)findViewById(R.id.Button_2);
+         but3=(Button)findViewById(R.id.Button_3);
+         sol=(TextView)findViewById(R.id.solution);
+    }
+
+    public void Submit(View view)
+    {
+         EditText user_val=(EditText)findViewById(R.id.User_number);
+         String temp=user_val.getText().toString();
+
+         if(!"".equals(temp))
+         {
+            value=Integer.parseInt(temp);
+
+         }
+         find_fact(value);
+
+    }
+    public void find_fact(int val)
+    {
+        Vector<Integer> fac = new Vector<Integer>();
+        int a=val/2;
+        for (int i=1;i<=a;i++)
+        {
+            if((val%i)==0)
+            {
+                fac.add(i);
+            }
+            fac.trimToSize();
+            if(fac.size()>10)
+            {
+                break;
+            }
+        }
+        int si=fac.size();
+        if(fac.isEmpty())
+        {
+            //fac.add(1);
+            fac.add(val);
+        }
+        Random rand=new Random();
+        int fact=rand.nextInt(fac.size());
+
+        arr[0]=rand.nextInt(100);
+        if(fac.contains(arr[0]))
+            arr[0] = val - 1;
+        arr[1]=rand.nextInt(100);
+        if (fac.contains(arr[1]) || arr[1]==arr[0])
+            arr[1] = arr[1] + 1;
+        arr[2]=fac.get(fact);
+        ran=rand.nextInt(3);
+        switch(ran){
+            case 0:
+                but1.setText(""+arr[2]);
+                but2.setText(""+arr[1]);
+                but3.setText(""+arr[0]);
+                break;
+            case 1:
+                but1.setText(""+arr[1]);
+                but2.setText(""+arr[2]);
+                but3.setText(""+arr[0]);
+                break;
+            case 2:
+                but1.setText(""+arr[0]);
+                but2.setText(""+arr[1]);
+                but3.setText(""+arr[2]);
+                break;
+        }
+    }
+    public void option1(View view)
+    {
+        if(ran==0)
+        {
+            sol.setText(cor);
+        }
+        else
+        {
+            String str=wron+arr[2];
+            sol.setText(str);
+        }
+    }
+    public void option2(View view)
+    {
+        if(ran==1)
+        {
+            sol.setText(cor);
+        }
+        else
+        {
+            String str=wron+arr[2];
+            sol.setText(str);
+        }
+    }
+    public void option3(View view)
+    {
+        if(ran==2)
+        {
+            sol.setText(cor);
+        }
+        else
+        {
+            String str=wron+arr[2];
+            sol.setText(str);
+        }
+    }
+
+}
